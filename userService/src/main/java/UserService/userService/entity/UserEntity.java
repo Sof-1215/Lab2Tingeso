@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Entity
+@Table(name = "userentity")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
