@@ -1,0 +1,12 @@
+server:
+  port: 8888
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          default-label: main
+          uri: https://github.com/Sof-1215/Lab2Tingeso
+          search-paths: config-data
+  application:
+    name: config-service
