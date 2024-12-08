@@ -4,7 +4,7 @@ const BackendServer = import.meta.env.VITE_PAYROLL_BACKEND_SERVER; // localhost 
 const BackendPort = import.meta.env.VITE_PAYROLL_BACKEND_PORT; // puerto
 
 export default axios.create({
-    baseURL: `http://localhost:8092`,
+    baseURL: `http://localhost:8088`,
     headers: {
         'Content-Type': 'application/json'
     }

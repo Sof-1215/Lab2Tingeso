@@ -102,6 +102,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>userService</finalName>
 	</build>
 	<repositories>
 		<repository>
