@@ -4,14 +4,13 @@ import MortgageLoanService.mortgageLoanService.entity.MortgageLoanEntity;
 import MortgageLoanService.mortgageLoanService.service.MortgageLoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/mortgageloan")
+@CrossOrigin("*")
 public class MortgageLoanController {
     @Autowired
     MortgageLoanService mortgageLoanService;
@@ -21,4 +20,16 @@ public class MortgageLoanController {
         List<MortgageLoanEntity> mortgageLoans = mortgageLoanService.getMortgageLoans();
         return ResponseEntity.ok(mortgageLoans);
     }
+
+    @PostMapping("/monthlypayment")
+    public ResponseEntity<Integer> calculateMonthlyPayment(@RequestParam float amount,
+                                          @RequestParam float interestRate,
+                                          @RequestParam int termYears,
+                                          @RequestParam float propertyValue,
+                                          @RequestParam int loanType
+                                          ) {
+        Integer MonthlyPayment = mortgageLoanService.simulator(amount, interestRate, termYears, propertyValue, loanType);
+        return ResponseEntity.ok(MonthlyPayment);
+    }
+
 }
