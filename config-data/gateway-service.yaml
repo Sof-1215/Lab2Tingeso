@@ -27,4 +27,8 @@ spring:
           uri: lb://mortgageLoanService
           predicates:
             - Path=/api/v1/mortgageloan/**
+        - id: loanSolicitudeService
+          uri: lb://loanSolicitudeService
+          predicates:
+            - Path=/api/v1/loansolicitude/**
             
