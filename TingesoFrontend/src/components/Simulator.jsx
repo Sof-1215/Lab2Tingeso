@@ -18,36 +18,17 @@ const Simulator = () => {
     const [monthlyPayment, setMonthlyPayment] = useState(null);
     const [loanType, setLoanType] = useState('');
 
-    // Validación para asegurarse de que el valor es un número positivo
-    const handlePositiveValue = (value) => {
-        const parsedValue = parseFloat(value);
-        return isNaN(parsedValue) || parsedValue < 0 ? '' : parsedValue;
-    };
+    const handlePositiveValue = (value) => value >= 0 ? value : '';
 
-    // Validación para asegurarse de que todos los campos estén completos
-    const validateFields = () => {
-        if (!amount || !interestRate || !termYears || !propertyValue || !loanType) {
-            alert('Please fill in all the fields');
-            return false;
-        }
-        return true;
-    };
-
-    // Función para calcular la cuota mensual
     const calculate = async (event) => {
         event.preventDefault();
-
-        // Validar los campos antes de enviar
-        if (!validateFields()) return;
-
-        // Convertir los valores a tipos numéricos
+        
         const P = parseFloat(amount);
-        const r = parseFloat(interestRate); // Tasa de interés mensual
-        const n = parseInt(termYears); // Número total de pagos en meses
+        const r = parseFloat(interestRate); // Monthly interest rate
+        const n = parseInt(termYears); // Total number of payments in months
         const pValue = parseFloat(propertyValue);
         const loanTypeValue = parseInt(loanType);
 
-        // Imprimir los datos en la consola
         console.log("Datos a enviar:", {
             P,
             r,
@@ -57,13 +38,65 @@ const Simulator = () => {
         });
 
         try {
-            // Realizar la solicitud al backend
             const response = await mortgageLoanService.simulate(P, r, n, pValue, loanTypeValue);
-            setMonthlyPayment(response.data); // Asignar el resultado a la variable state
+            setMonthlyPayment(response.data);
         } catch (error) {
-            // Manejo de errores si la solicitud falla
-            alert('Error calculating the monthly payment: ' + error.message);
+            alert('Error calculating the monthly payment: ' + error);
         }
+    };
+
+    const calculateMonthlyPayment = (event) => {
+        event.preventDefault();
+
+        const P = parseFloat(amount);
+        const r = (parseFloat(interestRate) / 100) / 12; // Monthly interest rate
+        const n = parseInt(termYears) * 12; // Total number of payments in months
+        const pValue = parseFloat(propertyValue);
+        const loanTypeValue = parseInt(loanType);
+        
+        let maxAmount;
+
+        if (r === 0) {
+            setMonthlyPayment(P / n);
+            return;
+        }
+
+        switch (loanTypeValue) {
+            case 1:
+                maxAmount = pValue * 0.8;
+                if (termYears > 30 || r * 12 < 0.025 || r * 12 > 0.05 || P > maxAmount) {
+                    alert('Invalid values: For first home loans, max 30 years, 2.5%-5.0% interest, 80% of property value.');
+                    return;
+                }
+                break;
+            case 2:
+                maxAmount = pValue * 0.7;
+                if (termYears > 20 || r * 12 < 0.04 || r * 12 > 0.06 || P > maxAmount) {
+                    alert('Invalid values: For second home loans, max 20 years, 4.0%-6.0% interest, 70% of property value.');
+                    return;
+                }
+                break;
+            case 3:
+                maxAmount = pValue * 0.6;
+                if (termYears > 25 || r * 12 < 0.05 || r * 12 > 0.07 || P > maxAmount) {
+                    alert('Invalid values: For commercial property loans, max 25 years, 5.0%-7.0% interest, 60% of property value.');
+                    return;
+                }
+                break;
+            case 4:
+                maxAmount = pValue * 0.5;
+                if (termYears > 15 || r * 12 < 0.045 || r * 12 > 0.06 || P > maxAmount) {
+                    alert('Invalid values: For remodeling loans, max 15 years, 4.5%-6.0% interest, 50% of property value.');
+                    return;
+                }
+                break;
+            default:
+                alert("Please select a valid loan type.");
+                return;
+        }
+
+        const M = P * ((r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1));
+        setMonthlyPayment(M);
     };
 
     return (
@@ -72,7 +105,6 @@ const Simulator = () => {
                 Mortgage Credit Simulator
             </Typography>
             <form onSubmit={calculate}>
-                {/* Input para el valor de la propiedad */}
                 <FormControl fullWidth margin="normal">
                     <TextField
                         label="Property Value"
@@ -82,8 +114,6 @@ const Simulator = () => {
                         required
                     />
                 </FormControl>
-
-                {/* Input para el monto del préstamo */}
                 <FormControl fullWidth margin="normal">
                     <TextField
                         label="Loan Amount"
@@ -93,8 +123,6 @@ const Simulator = () => {
                         required
                     />
                 </FormControl>
-
-                {/* Input para la tasa de interés anual */}
                 <FormControl fullWidth margin="normal">
                     <TextField
                         label="Annual Interest Rate (%)"
@@ -104,8 +132,6 @@ const Simulator = () => {
                         required
                     />
                 </FormControl>
-
-                {/* Input para el plazo en años */}
                 <FormControl fullWidth margin="normal">
                     <TextField
                         label="Term (Years)"
@@ -115,8 +141,6 @@ const Simulator = () => {
                         required
                     />
                 </FormControl>
-
-                {/* Selector para el tipo de préstamo */}
                 <FormControl fullWidth margin="normal">
                     <InputLabel>Loan Type</InputLabel>
                     <Select value={loanType} onChange={(e) => setLoanType(e.target.value)} required>
@@ -127,8 +151,6 @@ const Simulator = () => {
                         <MenuItem value="4">Remodeling loan</MenuItem>
                     </Select>
                 </FormControl>
-
-                {/* Botón para enviar el formulario */}
                 <Button
                     type="submit"
                     fullWidth
@@ -140,7 +162,6 @@ const Simulator = () => {
                 </Button>
             </form>
 
-            {/* Mostrar la cuota mensual calculada */}
             {monthlyPayment !== null && (
                 <Box marginTop="20px" textAlign="center">
                     <Typography variant="h5" color="textSecondary">
@@ -153,4 +174,3 @@ const Simulator = () => {
 };
 
 export default Simulator;
-
