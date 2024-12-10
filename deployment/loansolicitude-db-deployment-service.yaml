@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: PersistentVolume
+metadata:
+  name: loansolicitude-db-pv
+  labels:
+    type: local
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    - path: "/data/loansolicitude-db-data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: loansolicitude-db-pvc
+  labels:
+    app: postgres
+    tier: database
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loansolicitude-db-deployment
+  labels:
+    app: loansolicitude-db-deployment
+    tier: database
+spec:
+  selector:
+    matchLabels:
+      app: loansolicitude-db-deployment
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: loansolicitude-db-deployment
+        tier: database
+    spec:
+      containers:
+      - name: loansolicitude-db
+        image: postgres:latest
+        imagePullPolicy: "IfNotPresent"
+        ports:
+          - containerPort: 5432
+        env:
+          - name: POSTGRES_USER
+            valueFrom:
+              configMapKeyRef:
+                name: postgres-config-map
+                key: POSTGRES_USER
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: postgres-config-map
+                key: POSTGRES_PASSWORD
+        volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: loansolicitude-db-data
+      volumes:
+        - name: loansolicitude-db-data
+          persistentVolumeClaim:
+            claimName: loansolicitude-db-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: loansolicitude-db-service
+  labels:
+    app: loansolicitude-db-service
+    tier: database
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+  selector:
+    app: loansolicitude-db-deployment
+    tier: database
+  type: LoadBalancer
