@@ -5,7 +5,19 @@ metadata:
   labels:
     app: postgres-config-map
 data:
-  DB_HOST_USERS: postgres-service
+  DB_HOST_USERS: user-db-service
   DB_PORT_USERS: "5432"
-  DB_DBNAME_USERS: usersdb
+  DB_DBNAME_USERS: UserServiceDB
+  DB_USER_USERS: postgres
+  DB_PASSWORD_USERS: Silvestre9+
+  DB_HOST_MORTGAGELOANS: mortgage-loan-db-service
+  DB_PORT_MORTGAGELOANS: "5432"
+  DB_DBNAME_MORTGAGELOANS: MortgageLoanServiceDB
+  DB_USER_MORTGAGELOANS: postgres
+  DB_PASSWORD_MORTGAGELOANS: Silvestre9+
+  DB_HOST_LOANSOLICITUDES: loan-solicitude-db-service
+  DB_PORT_LOANSOLICITUDES: "5432"
+  DB_DBNAME_LOANSOLICITUDES: LoanSolicitudeServiceDB
+  DB_USER_LOANSOLICITUDES: postgres
+  DB_PASSWORD_LOANSOLICITUDES: Silvestre9+
   

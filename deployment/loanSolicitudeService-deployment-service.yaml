@@ -1,64 +1,64 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: userService-deployment
+  name: loanSolicitude-deployment
   labels:
-    app: userService-deployment
+    app: loanSolicitude-deployment
 spec:
   selector:
     matchLabels:
-      app: userService-deployment
+      app: loanSolicitude-deployment
   replicas: 1
   template:
     metadata:
     labels:
-      app: userService-deployment
+      app: loanSolicitude-deployment
     spec:
       containers:
-      - name: user-service
-        image: sof1215/userservice:latest
+      - name: loansolicitudeservice
+        image: sof1215/loansolicitudeservice:latest
         ports:
-          - containerPort: 8090
+          - containerPort: 8092
         env:
           - name: SERVER_PORT
-            value: "8090"
+            value: "8092"
           - name: DB_HOST
             valueFrom:
               configMapKeyRef:
                 name: postgres-config-map
-                key: DB_HOST_USERS
+                key: DB_HOST_LOANSOLICITUDES
           - name: DB_PORT
             valueFrom:
               configMapKeyRef:
                 name: postgres-config-map
-                key: DB_PORT_USERS
+                key: DB_PORT_LOANSOLICITUDES
           - name: DB_DBNAME
             valueFrom:
               configMapKeyRef:
                 name: postgres-config-map
-                key: DB_DBNAME_USERS
+                key: DB_DBNAME_LOANSOLICITUDES
           - name: DB_USER
             valueFrom:
               configMapKeyRef:
                 name: postgres-config-map
-                key: DB_USER_USERS
+                key: DB_USER_LOANSOLICITUDES
           - name: DB_PASSWORD
             valueFrom:
               configMapKeyRef:
                 name: postgres-config-map
-                key: DB_PASSWORD_USERS
+                key: DB_PASSWORD_LOANSOLICITUDES
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: userService-service
+  name: loanSolicitudeService-service
   labels:
-    app: userService-service
+    app: loanSolicitudeService-service
 spec:
   selector:
-    app: userService-deployment
+    app: loanSolicitudeService-deployment
   ports:
     - protocol: TCP
-      port: 8090
-      targetPort: 8090
+      port: 8092
+      targetPort: 8092
   type: LoadBalancer

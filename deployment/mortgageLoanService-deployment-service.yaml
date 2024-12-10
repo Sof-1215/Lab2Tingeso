@@ -1,64 +1,64 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: userService-deployment
+  name: mortgageLoanService-deployment
   labels:
-    app: userService-deployment
+    app: mortgageLoanService-deployment
 spec:
   selector:
     matchLabels:
-      app: userService-deployment
+      app: mortgageLoanService-deployment
   replicas: 1
   template:
     metadata:
     labels:
-      app: userService-deployment
+      app: mortgageLoanService-deployment
     spec:
       containers:
-      - name: user-service
-        image: sof1215/userservice:latest
+      - name: mortgageloanservice
+        image: sof1215/mortgageloanservice:latest
         ports:
-          - containerPort: 8090
+          - containerPort: 8091
         env:
           - name: SERVER_PORT
-            value: "8090"
+            value: "8091"
           - name: DB_HOST
             valueFrom:
               configMapKeyRef:
                 name: postgres-config-map
-                key: DB_HOST_USERS
+                key: DB_HOST_MORTGAGELOANS
           - name: DB_PORT
             valueFrom:
               configMapKeyRef:
                 name: postgres-config-map
-                key: DB_PORT_USERS
+                key: DB_PORT_MORTGAGELOANS
           - name: DB_DBNAME
             valueFrom:
               configMapKeyRef:
                 name: postgres-config-map
-                key: DB_DBNAME_USERS
+                key: DB_DBNAME_MORTGAGELOANS
           - name: DB_USER
             valueFrom:
               configMapKeyRef:
                 name: postgres-config-map
-                key: DB_USER_USERS
+                key: DB_USER_MORTGAGELOANS
           - name: DB_PASSWORD
             valueFrom:
               configMapKeyRef:
                 name: postgres-config-map
-                key: DB_PASSWORD_USERS
+                key: DB_PASSWORD_MORTGAGELOANS
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: userService-service
+  name: mortgageLoanService-service
   labels:
-    app: userService-service
+    app: mortgageLoanService-service
 spec:
   selector:
-    app: userService-deployment
+    app: mortgageLoanService-deployment
   ports:
     - protocol: TCP
-      port: 8090
-      targetPort: 8090
+      port: 8091
+      targetPort: 8091
   type: LoadBalancer
