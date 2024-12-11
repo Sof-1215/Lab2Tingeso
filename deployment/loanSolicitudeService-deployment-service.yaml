@@ -11,39 +11,39 @@ spec:
   replicas: 1
   template:
     metadata:
-    labels:
-      app: loanSolicitude-deployment
+      labels:
+        app: loanSolicitude-deployment
     spec:
       containers:
-      - name: loansolicitudeservice
-        image: sof1215/loansolicitudeservice:latest
-        ports:
-          - containerPort: 8092
-        env:
-          - name: SERVER_PORT
-            value: "0"
-          - name: DB_HOST
-            valueFrom:
-              configMapKeyRef:
-                name: postgres-config-map
-                key: DB_HOST_LOANSOLICITUDES
-          - name: DB_PORT
-            valueFrom:
-              configMapKeyRef:
-                name: postgres-config-map
-                key: DB_PORT_LOANSOLICITUDES
-          - name: DB_DBNAME
-            valueFrom:
-              configMapKeyRef:
-                name: postgres-config-map
-                key: DB_DBNAME_LOANSOLICITUDES
-          - name: DB_USER
-            valueFrom:
-              configMapKeyRef:
-                name: postgres-config-map
-                key: DB_USER_LOANSOLICITUDES
-          - name: DB_PASSWORD
-            valueFrom:
-              configMapKeyRef:
-                name: postgres-config-map
-                key: DB_PASSWORD_LOANSOLICITUDES
+        - name: loansolicitudeservice
+          image: sof1215/loansolicitudeservice:latest
+          ports:
+            - containerPort: 8092
+          env:
+            - name: SERVER_PORT
+              value: "0"
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_HOST_LOANSOLICITUDES
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_PORT_LOANSOLICITUDES
+            - name: DB_DBNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_DBNAME_LOANSOLICITUDES
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_USER_LOANSOLICITUDES
+            - name: DB_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_PASSWORD_LOANSOLICITUDES

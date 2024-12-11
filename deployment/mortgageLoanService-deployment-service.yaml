@@ -11,39 +11,39 @@ spec:
   replicas: 1
   template:
     metadata:
-    labels:
-      app: mortgageLoanService-deployment
+      labels:
+        app: mortgageLoanService-deployment
     spec:
       containers:
-      - name: mortgageloanservice
-        image: sof1215/mortgageloanservice:latest
-        ports:
-          - containerPort: 8091
-        env:
-          - name: SERVER_PORT
-            value: "0"
-          - name: DB_HOST
-            valueFrom:
-              configMapKeyRef:
-                name: postgres-config-map
-                key: DB_HOST_MORTGAGELOANS
-          - name: DB_PORT
-            valueFrom:
-              configMapKeyRef:
-                name: postgres-config-map
-                key: DB_PORT_MORTGAGELOANS
-          - name: DB_DBNAME
-            valueFrom:
-              configMapKeyRef:
-                name: postgres-config-map
-                key: DB_DBNAME_MORTGAGELOANS
-          - name: DB_USER
-            valueFrom:
-              configMapKeyRef:
-                name: postgres-config-map
-                key: DB_USER_MORTGAGELOANS
-          - name: DB_PASSWORD
-            valueFrom:
-              configMapKeyRef:
-                name: postgres-config-map
-                key: DB_PASSWORD_MORTGAGELOANS
+        - name: mortgageloanservice
+          image: sof1215/mortgageloanservice:latest
+          ports:
+            - containerPort: 8091
+          env:
+            - name: SERVER_PORT
+              value: "0"
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_HOST_MORTGAGELOANS
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_PORT_MORTGAGELOANS
+            - name: DB_DBNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_DBNAME_MORTGAGELOANS
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_USER_MORTGAGELOANS
+            - name: DB_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_PASSWORD_MORTGAGELOANS
