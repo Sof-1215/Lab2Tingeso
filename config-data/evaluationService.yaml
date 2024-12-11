@@ -1,5 +1,10 @@
 server:
-  port: 8092
+  port: ${PORT:${SERVER_PORT:0}}
+spring:
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
 eureka:
   instance:
     hostname: localhost
