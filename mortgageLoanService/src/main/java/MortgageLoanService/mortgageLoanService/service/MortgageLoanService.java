@@ -34,6 +34,12 @@ public class MortgageLoanService {
         MortgageLoanEntity loan = getMortgageLoanById(LoanType);
         long loanId = LoanType;
 
+        maxAmount = propertyValue * loan.getMaxAmount();
+        if (termYears > loan.getMaxTerm() || r * 12 < loan.getMinInterestRate() || r * 12 > loan.getMaxInterestRate() || P > maxAmount) {
+            throw new IllegalArgumentException("Invalid values.");
+        }
+
+        /*
         switch ((int)loanId) { // Convert Long to int for the switch
             case 1: // First home loan
                 maxAmount = propertyValue * loan.getMaxAmount();
@@ -62,6 +68,8 @@ public class MortgageLoanService {
             default:
                 throw new IllegalArgumentException("Please select a valid loan type.");
         }
+
+         */
 
         // Handle zero interest rate case
         if (r == 0) {
