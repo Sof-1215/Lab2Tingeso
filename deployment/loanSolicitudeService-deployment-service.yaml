@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: loanSolicitude-deployment
+  name: loansolicitude-deployment
   labels:
-    app: loanSolicitude-deployment
+    app: loansolicitude-deployment
 spec:
   selector:
     matchLabels:
-      app: loanSolicitude-deployment
+      app: loansolicitude-deployment
   replicas: 1
   template:
     metadata:
       labels:
-        app: loanSolicitude-deployment
+        app: loansolicitude-deployment
     spec:
       containers:
         - name: loansolicitudeservice

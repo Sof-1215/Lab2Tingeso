@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: userService-deployment
+  name: userservice-deployment
   labels:
-    app: userService-deployment
+    app: userservice-deployment
 spec:
   selector:
     matchLabels:
-      app: userService-deployment
+      app: userservice-deployment
   replicas: 1
   template:
     metadata:
       labels:
-        app: userService-deployment
+        app: userservice-deployment
     spec:
       containers:
-        - name: user-service
+        - name: userservice
           image: sof1215/userservice:latest
           ports:
             - containerPort: 8090
