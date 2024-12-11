@@ -21,7 +21,7 @@ spec:
           - containerPort: 8091
         env:
           - name: SERVER_PORT
-            value: "8091"
+            value: "0"
           - name: DB_HOST
             valueFrom:
               configMapKeyRef:
@@ -47,18 +47,3 @@ spec:
               configMapKeyRef:
                 name: postgres-config-map
                 key: DB_PASSWORD_MORTGAGELOANS
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mortgageLoanService-service
-  labels:
-    app: mortgageLoanService-service
-spec:
-  selector:
-    app: mortgageLoanService-deployment
-  ports:
-    - protocol: TCP
-      port: 8091
-      targetPort: 8091
-  type: LoadBalancer

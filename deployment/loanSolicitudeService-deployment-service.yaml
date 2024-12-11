@@ -21,7 +21,7 @@ spec:
           - containerPort: 8092
         env:
           - name: SERVER_PORT
-            value: "8092"
+            value: "0"
           - name: DB_HOST
             valueFrom:
               configMapKeyRef:
@@ -47,18 +47,3 @@ spec:
               configMapKeyRef:
                 name: postgres-config-map
                 key: DB_PASSWORD_LOANSOLICITUDES
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: loanSolicitudeService-service
-  labels:
-    app: loanSolicitudeService-service
-spec:
-  selector:
-    app: loanSolicitudeService-deployment
-  ports:
-    - protocol: TCP
-      port: 8092
-      targetPort: 8092
-  type: LoadBalancer

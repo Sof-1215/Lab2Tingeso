@@ -21,7 +21,7 @@ spec:
           - containerPort: 8090
         env:
           - name: SERVER_PORT
-            value: "8090"
+            value: "0"
           - name: DB_HOST
             valueFrom:
               configMapKeyRef:
@@ -47,18 +47,3 @@ spec:
               configMapKeyRef:
                 name: postgres-config-map
                 key: DB_PASSWORD_USERS
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: userService-service
-  labels:
-    app: userService-service
-spec:
-  selector:
-    app: userService-deployment
-  ports:
-    - protocol: TCP
-      port: 8090
-      targetPort: 8090
-  type: LoadBalancer

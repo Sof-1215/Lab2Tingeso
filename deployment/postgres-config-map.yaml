@@ -20,4 +20,6 @@ data:
   DB_DBNAME_LOANSOLICITUDES: LoanSolicitudeServiceDB
   DB_USER_LOANSOLICITUDES: postgres
   DB_PASSWORD_LOANSOLICITUDES: Silvestre9+
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: Silvestre9+
   
