@@ -17,15 +17,15 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: MortgageLoanServiceDB; Type: DATABASE; Schema: -; Owner: postgres
+-- Name: mortgageloan-db; Type: DATABASE; Schema: -; Owner: postgres
 --
 
-CREATE DATABASE "MortgageLoanServiceDB" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'Spanish_Chile.1252';
+CREATE DATABASE "mortgageloan-db" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'Spanish_Chile.1252';
 
 
-ALTER DATABASE "MortgageLoanServiceDB" OWNER TO postgres;
+ALTER DATABASE "mortgageloan-db" OWNER TO postgres;
 
-\connect "MortgageLoanServiceDB"
+\connect "mortgageloan-db"
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;

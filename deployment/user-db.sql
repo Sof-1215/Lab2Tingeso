@@ -17,15 +17,15 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: UserServiceDB; Type: DATABASE; Schema: -; Owner: postgres
+-- Name: user-db; Type: DATABASE; Schema: -; Owner: postgres
 --
 
-CREATE DATABASE "UserServiceDB" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'Spanish_Chile.1252';
+CREATE DATABASE "user-db" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'Spanish_Chile.1252';
 
 
-ALTER DATABASE "UserServiceDB" OWNER TO postgres;
+ALTER DATABASE "user-db" OWNER TO postgres;
 
-\connect "UserServiceDB"
+\connect "user-db"
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
